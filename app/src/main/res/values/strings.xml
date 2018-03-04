@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">RadioO</string>
+
+    <string name="Search">Search</string>
+    <string name="Text">Text</string>
+
+    <string name="Track">Track name</string>
+    <string name="Performer">Performer</string>
+    <string name="NowPlay">Nothing plays now</string>
+    <string name="RadioStation">Radio station</string>
+    <string name="Favorite">Favorites</string>
+    <string name="Tutorial">This is an Action Card</string>
+    <string name="Tutorial2">Press it twice to go to the radio station search menu. Hold it to go to settings, and, press once to enter the list of favorite radio stations.</string>
+    <string name="Content_description_cover">Default album cover</string>
+
+    <string name="Filters">Filters</string>
+    <string name="Added">Added</string>
+    <string name="Content_description_play">Play button</string>
+    <string name="Content_description_add">Add to favorite button</string>
+    <string name="Content_description_close">Close player</string>
+    <string name="mood">Search by artist</string>
+    <string name="Already_added">Already added</string>
+
+    <string name="Dialog">Do you want to delete this radio station?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="Deleted">Deleted</string>
+
+    <string-array name="Genre">
+        <item>Genre</item>
+        <item>Live radio</item>
+        <item>Commercial radio</item>
+        <item>Dance radio</item>
+        <item>Electronic</item>
+        <item>Wide format</item>
+        <item>Background Music</item>
+        <item>Pop music</item>
+        <item>Rock music</item>
+        <item>Russian Music</item>
+        <item>Jazz / Blues</item>
+        <item>Rap / Hip-hop</item>
+        <item>Humor</item>
+        <item>For children</item>
+        <item>Retro</item>
+        <item>World Music</item>
+        <item>Ethnic Music</item>
+        <item>Classic</item>
+    </string-array>
+
+    <string-array name="For_activity">
+        <item>For activity</item>
+        <item>For dances</item>
+        <item>For fitness</item>
+        <item>For running</item>
+        <item>For trainers</item>
+        <item>To the car</item>
+        <item>For children</item>
+        <item>For sleeping</item>
+        <item>For yoga</item>
+        <item>For the Soul</item>
+        <item>For expectant mothers</item>
+        <item>For old school people</item>
+    </string-array>
+
+    <string-array name="For_mood">
+        <item>Aggressive</item>
+        <item>Spring</item>
+        <item>Sad</item>
+        <item>Rain outside the window</item>
+        <item>Antipyretic</item>
+        <item>Winter</item>
+        <item>Beautiful</item>
+        <item>Cool</item>
+        <item>Summer</item>
+        <item>Dreamy</item>
+        <item>Mystic</item>
+        <item>Gloomy</item>
+        <item>New Year\'s</item>
+        <item>Autumn</item>
+        <item>Joyful</item>
+        <item>Relaxing</item>
+        <item>Sentimental</item>
+        <item>Quiet</item>
+        <item>Energetic</item>
+        <item>Epic</item>
+    </string-array>
+
+    <string name="Settings">Settings</string>
+    <string name="Sleep_timer">Sleep Timer</string>
+    <string name="Hours">0 h.</string>
+    <string name="Hours2"> h.</string>
+    <string name="Set">Set</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Timer_stopped">Timer stopped</string>
+    <string name="Music_off">Music will turn off after </string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="Theme">Theme</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
+    <string name="Reset_settings">Reset settings</string>
+
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+</resources>

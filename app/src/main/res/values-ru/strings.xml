@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RadioO</string>
+
+    <string name="Search">Search</string>
+    <string name="Text">Text</string>
+
+    <string name="Track">Название трека</string>
+    <string name="Performer">Исполнитель</string>
+    <string name="NowPlay">Сейчас ничего не играет</string>
+    <string name="RadioStation">Радиостанция</string>
+    <string name="Favorite">Избранное</string>
+    <string name="Tutorial">Это - Action Card</string>
+    <string name="Tutorial2">Нажмите на нее дважды, чтобы перейти в меню поиска радиостанций. Удерживайте ее, чтобы перейти в настройки, и, нажмите один раз, чтобы войти в список избранных радиостанций.</string>
+    <string name="Content_description_cover">Default album cover</string>
+
+    <string name="Filters">Фильтры</string>
+    <string name="Added">Добавлено</string>
+    <string name="Content_description_play">Play button</string>
+    <string name="Content_description_add">Add to favorite button</string>
+    <string name="Content_description_close">Close player</string>
+    <string name="mood">Поиск по исполнителю</string>
+    <string name="Already_added">Уже добавлено</string>
+
+    <string name="Dialog">Вы точно хотите удалить эту радиостанцию?</string>
+    <string name="No">Нет</string>
+    <string name="Yes">Да</string>
+
+
+    <string-array name="Genre">
+        <item>Жанр</item>
+        <item>Эфирное радио</item>
+        <item>Коммерческое радио</item>
+        <item>Танцевальное радио</item>
+        <item>Электрика</item>
+        <item>Широкий формат</item>
+        <item>Фоновая музыка</item>
+        <item>Поп музыка</item>
+        <item>Рок музыка</item>
+        <item>Русская музыка</item>
+        <item>Джаз/блюз</item>
+        <item>Рэп/Хип-хоп</item>
+        <item>Юмор</item>
+        <item>Для детей</item>
+        <item>Ретро</item>
+        <item>World Music</item>
+        <item>Этническая музыка</item>
+        <item>Классика</item>
+    </string-array>
+
+    <string-array name="For_activity">
+        <item>Под занятие</item>
+        <item>Для танцев</item>
+        <item>Для фитнеса</item>
+        <item>Для бега</item>
+        <item>Для тренеровок</item>
+        <item>В машину</item>
+        <item>Для детей</item>
+        <item>Для сна</item>
+        <item>Для йоги</item>
+        <item>Для души</item>
+        <item>Для будущих мам</item>
+        <item>Для тех кому за</item>
+    </string-array>
+
+    <string-array name="For_mood">
+        <item>Агрессивное</item>
+        <item>Весеннее</item>
+        <item>Грустное</item>
+        <item>Дождь за окном</item>
+        <item>Жаропонижающие</item>
+        <item>Зимнее</item>
+        <item>Красивое</item>
+        <item>Крутое</item>
+        <item>Летнее</item>
+        <item>Мечтательное</item>
+        <item>Мистическое</item>
+        <item>Мрачное</item>
+        <item>Новогоднее</item>
+        <item>Осеннее</item>
+        <item>Радостное</item>
+        <item>Расслабляющее</item>
+        <item>Сентиментальное</item>
+        <item>Спокойное</item>
+        <item>Энергичное</item>
+        <item>Эпичное</item>
+    </string-array>
+
+    <string name="Settings">Настройки</string>
+    <string name="Sleep_timer">Таймер сна</string>
+    <string name="Hours">0 ч.</string>
+    <string name="Hours2"> ч.</string>
+    <string name="Set">Установить</string>
+    <string name="Cancel">Отменить</string>
+    <string name="Timer_stopped">Таймер остановлен</string>
+    <string name="Music_off">Музыка отключится через </string>
+    <string name="Theme">Тема</string>
+    <string name="theme_dark">Темная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="Reset_settings">Сбросить настройки</string>
+
+</resources>
