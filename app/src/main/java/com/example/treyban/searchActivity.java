@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +32,7 @@ import com.example.treyban.myapplication.PlayerService;
 import com.example.treyban.myapplication.R;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static android.view.View.VISIBLE;
 import static com.example.treyban.myapplication.MainActivity.APP_PREFERENCES;
@@ -65,8 +68,6 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
     public static String DATA_STREAM = "http://ic7.101.ru:8000/a219?userid=0&setst=ve7npodn8gkcncmdjk54ls7ht4&city=347";
     //Переменная для работы с БД
     public static String name_kanal;
-    private DatabaseHelper mDBHelper;
-    private SQLiteDatabase mDb;
 
     public Switch aSwitch;
     public static String [] list_radioo;
@@ -128,9 +129,9 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
 
         linearLayout2.removeView(linearLayout);
         spinner1= findViewById(R.id.spinner);
-        spinner1.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        spinner1.setOnItemSelectedListener(this);
         spinner2= findViewById(R.id.spinner2);
-        spinner2.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        spinner2.setOnItemSelectedListener(this);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,garn);
         spinner1.setAdapter(adapter1);
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,zanaytia);
@@ -144,18 +145,19 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
 
                 name_kanal= (String) ((TextView)itemClicked).getText();
                 for(int i=0;i<198;i++){
-                    if(name_kanal==list_radioo[i]){
+                    if(Objects.equals(name_kanal, list_radioo[i])){
                         DATA_STREAM=list_potoks[i];
                         link2=list_link[i];
                         break;
                     }
                 }
-
+                MainActivity.mediaController.getTransportControls().stop();
                 String masiv_link[] = link2.split("/");
                 String nome=masiv_link[masiv_link.length-1];
                 name_nome=nome;
@@ -168,7 +170,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             }
         });
 
-        mDBHelper = new DatabaseHelper(this);
+        DatabaseHelper mDBHelper = new DatabaseHelper(this);
 
         try {
             mDBHelper.updateDataBase();
@@ -176,7 +178,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             throw new Error("UnableToUpdateDatabase");
         }
 
-        mDb = mDBHelper.getWritableDatabase();
+        SQLiteDatabase mDb = mDBHelper.getWritableDatabase();
 
         Cursor cursor = mDb.rawQuery("SELECT * FROM clients", null);
         cursor.moveToFirst();
@@ -236,7 +238,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
     }
 
     public void list(String s[]){
-        ArrayAdapter<String> adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,s);
+        ArrayAdapter<String> adap = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, s);
         listView.setAdapter(adap);
     }
 
@@ -250,6 +252,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         }
         if(name_radio==null){
             if(ima2==null) Log.d("","+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
             ima2.setImageResource(R.drawable.play_button);
         }else {
             ima2.setImageResource(R.drawable.pause_button);

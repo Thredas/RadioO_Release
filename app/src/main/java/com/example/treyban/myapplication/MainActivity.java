@@ -16,14 +16,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -42,6 +43,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +62,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
@@ -71,13 +72,15 @@ import static android.view.View.VISIBLE;
 import static com.example.treyban.searchActivity.name_kanal;
 
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
     @SuppressLint("StaticFieldLeak")
     public static Context context;
     public CardView Search;
     public TextView textview10;
-
+    @SuppressLint("StaticFieldLeak")
+    public static ProgressBar progressBar;
     public static HttpURLConnection urlConnection = null;
     public static BufferedReader reader = null;
     public static String resultJson = "";
@@ -93,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static String image="https://i.imgur.com/Og7pwiX.jpg", nome;
     public static boolean pim_parse=true;
     public static String theme = "";
-    private GestureDetectorCompat gd;
     @SuppressLint("StaticFieldLeak")
     public static ImageButton imgbtn, play_button;
     public static TextView [] id;
@@ -111,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public SharedPreferences sPref;
     public static final String APP_PREFERENCES = "Settings";
 
-    ArrayList<String[]> li= new ArrayList<String[]>();
     public Button button;
     public static String pars_uri_1="http://101.ru/api/channel/getTrackOnAir/",
             pars_uri_2="/channel/?dataFormat=json";
@@ -119,11 +120,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     PlayerService.PlayerServiceBinder playerServiceBinder;
     public static boolean searchAct=false;
     Bitmap bit=null;
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onRestart() {
         super.onRestart();
         Update_fon();
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void Update_fon(){
 
         if(PlayerService.name!=null) {
@@ -143,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         link[pim] = linkk;
         id[pim].setText(namee);
         linearLayout.addView(id[pim]);
-         pim++;
+        pim++;
 
     }
 
@@ -183,10 +186,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     pim2++;
                 } while (cursor2.moveToNext());
             } else
-            cursor2.close();
+                cursor2.close();
             database.close();
 
-        } catch (Exception x) {
+        } catch (Exception ignored) {
 
         }
 
@@ -195,9 +198,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static void Update() {
         linearLayout.removeAllViews();
         id = null;
-        id = new TextView[pim];
+        id = new TextView[50];
 
-        for (int i = 0; i < pim; i++) {
+        for (int i = 0; i < 50; i++) {
             id[i] = new TextView(textView0.getContext());
             id[i].setWidth(textView0.getWidth());
             id[i].setHeight(textView0.getHeight());
@@ -264,10 +267,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return bm;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("LongLogTag")
     public void Parse_data(String nomee, final int whence){
         pim_parse=false;
         nome=nomee;
+        progressBar.setVisibility(VISIBLE);
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -342,6 +347,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        progressBar.setVisibility(INVISIBLE);
+
                         if(whence==1){
                             new PlayerService().setData_Media(name_kanal, name_trake, name_ispoln, name_stream,bit);
                             mediaController.getTransportControls().prepare();
@@ -376,16 +383,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-    public void stat(){
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void stat(){
+        //progressBar.setVisibility(INVISIBLE);
         textView_parse1.setText(name_trake);
         textView_parse2.setText(name_ispoln);
-        radio_now_play.setText(PlayerService.name==null ? "Ничего не играет" : PlayerService.name);
+        radio_now_play.setText(PlayerService.name==null ? "Нечего не играет" : PlayerService.name);
         Uri uri = Uri.parse(image);
         Picasso.with(context) //передаем контекст приложения
-                    .load(uri)
-                    .resize(750, 750)
-                    .into(imgbtn);
+                .load(uri)
+                .resize(750, 750)
+                .into(imgbtn);
+        //progressBar.setScrollbarFadingEnabled(false);
+
     }
 
 
@@ -418,6 +429,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }, BIND_AUTO_CREATE);
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -425,6 +437,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mediaController.getTransportControls().fastForward();
         }
     }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -474,7 +489,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         play_button.setOnClickListener(this);
         textView_parse1 = findViewById(R.id.track);
         textView_parse2 = findViewById(R.id.singer);
+        progressBar = findViewById(R.id.progressBar2);
+        progressBar.setActivated(true);
+        // progressBar.setProgress(1);
+
         context=getApplicationContext();
+
         Update();
 
         MobileAds.initialize(this, "ca-app-pub-8421124895754019~9641352193");
@@ -556,7 +576,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Search.setOnTouchListener(new View.OnTouchListener() {
             @Override
-             public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent event) {
                 gesture.onTouchEvent(event);
                 return true;
             }
@@ -581,7 +601,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.d("2222222222222222222222222222222222222222222222222222222222222",name_timeLeft);
                             Thread.sleep(1000);
                         }
-                    } catch (InterruptedException e) { }
+                    } catch (InterruptedException ignored) { }
 
                 }
             }
@@ -591,6 +611,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getWindow().setSharedElementReturnTransition(returnTransition());
 
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("MissingSuperCall")
     public void onResume() {
         super.onResume();
@@ -598,7 +620,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         (findViewById(R.id.singer)).setSelected(true);
         (findViewById(R.id.radio_now_play)).setSelected(true);
         Update_fon();
-
     }
     private Transition enterTransition() {
         ChangeBounds bounds = new ChangeBounds();
@@ -652,10 +673,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
     @Override
     public boolean onLongClick(View view) {
-        AlertDialog.Builder ad = null;
+        AlertDialog.Builder ad;
         ad = new AlertDialog.Builder(this);
         ad.setTitle(R.string.Dialog);  // заголовок
         // ad.setMessage(message); // сообщение
@@ -693,6 +713,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+
     public void button_animation(){
         Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade);
         animation.setStartOffset(1000);
@@ -715,30 +736,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         play_button.startAnimation(animation);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.play_button){
-                if(PlayerService.name!=null){
-                    if(name_radio!=null){
-                        play_button.setImageResource(R.drawable.play_button);
-                        mediaController.getTransportControls().pause();
-                        name_radio=null;
+            if(PlayerService.name!=null){
+                if(name_radio!=null){
+                    play_button.setImageResource(R.drawable.play_button);
+                    mediaController.getTransportControls().pause();
+                    name_radio=null;
 
-                    }else {
-                        play_button.setImageResource(R.drawable.pause_button);
-                        mediaController.getTransportControls().play();
-                        name_radio=PlayerService.name;
+                }else {
+                    play_button.setImageResource(R.drawable.pause_button);
+                    mediaController.getTransportControls().play();
+                    name_radio=PlayerService.name;
 
-                    }
-                    button_animation();
+                }
+                button_animation();
             }
+            progressBar.setEnabled(false);
+            progressBar.setScrollbarFadingEnabled(false);
+            progressBar.setIndeterminate(false);
+            progressBar.setActivated(false);
+            progressBar.setClickable(false);
+            progressBar.setWillNotDraw(false);
+            progressBar.stopNestedScroll();
+            progressBar.setClickable(false);
+            progressBar.setProgress(0);
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            progressBar.stopNestedScroll();
+            progressBar.setVisibility(INVISIBLE);
         }
 
         for (int i = 0; i < pim; i++) {
             if (view == id[i]) {
 
                 closeFromCoordinates();
-
+                mediaController.getTransportControls().stop();
                 pim_parse=true;
                 name_radio=name[i];
                 name_kanal=name[i];

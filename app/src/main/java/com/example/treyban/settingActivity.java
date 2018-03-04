@@ -1,11 +1,12 @@
 package com.example.treyban;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
@@ -25,16 +26,20 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     public Button setTime;
     public Button cancel;
-    public SeekBar seekBar;
-    public TextView timeText;
+    @SuppressLint("StaticFieldLeak")
+    public static SeekBar seekBar;
+    @SuppressLint("StaticFieldLeak")
+    public static TextView timeText;
     public Button reset;
     public Switch Sswitch;
-    public static float time = 0;
-    CountDownTimer cTimer = null;
+    public static float time = 0,timeS = 0;
+    public static CountDownTimer cTimer = null;
     public static SharedPreferences maPrefs;
-    public CardView sleep_timer, theme;
+    @SuppressLint("StaticFieldLeak")
+    public static CardView sleep_timer, theme;
 
 
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +57,15 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
         Sswitch = findViewById(R.id.switch2);
         sleep_timer = findViewById(R.id.sleep_timer);
         theme = findViewById(R.id.theme);
-
+        seekBar = findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(this);
+        cancel = findViewById(R.id.cancel);
+        setTime = findViewById(R.id.setTime);
+        if (timeS>0){
+            seekBar.setProgress((int) (timeS*2));
+            cancel.setVisibility(View.VISIBLE);
+            setTime.setVisibility(View.GONE);
+        }
         if(APP_THEME){
             Sswitch.setChecked(true);
             Sswitch.setText(R.string.theme_dark);
@@ -65,8 +78,7 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
             theme.setCardBackgroundColor(getResources().getColor(R.color.white_dark));
         }
 
-        seekBar = findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(this);
+
 
         Sswitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -79,6 +91,7 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
                     Sswitch.setText(R.string.theme_dark);
                     Intent i = getBaseContext().getPackageManager()
                             .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                    assert i != null;
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 } else {
@@ -88,6 +101,7 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
                     Sswitch.setText(R.string.theme_light);
                     Intent i = getBaseContext().getPackageManager()
                             .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                    assert i != null;
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 }
@@ -116,10 +130,8 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        Toast.makeText(settingActivity.this, getString(R.string.Music_off) + " " + time + " " + getString(R.string.Hours2), Toast.LENGTH_SHORT).show();
                         startTimer();
-                        cancel.setVisibility(cancel.VISIBLE);
-                        setTime.setVisibility(setTime.GONE);
+
                     }
                 }
         );
@@ -130,8 +142,8 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
                     public void onClick(View v){
                         cancelTimer();
                         Toast.makeText(settingActivity.this, R.string.Timer_stopped, Toast.LENGTH_SHORT).show();
-                        cancel.setVisibility(cancel.GONE);
-                        setTime.setVisibility(setTime.VISIBLE);
+                        cancel.setVisibility(View.GONE);
+                        setTime.setVisibility(View.VISIBLE);
                         time = 0;
                         seekBar.setProgress((int) time);
                     }
@@ -152,6 +164,7 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         timeText = findViewById(R.id.timeText);
@@ -177,8 +190,15 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     void startTimer() {
         final long x;
-        time = time * 3600000;
-        x = (long) time;
+        if(time==0){
+            Toast.makeText(settingActivity.this,"Ошибка", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        cancel.setVisibility(View.VISIBLE);
+        setTime.setVisibility(View.GONE);
+        Toast.makeText(settingActivity.this, getString(R.string.Music_off) + " " + time + " " + getString(R.string.Hours2), Toast.LENGTH_SHORT).show();
+
+        x = (long)  (time * 3600000);
         cTimer = new CountDownTimer(x, 1000) {
             public void onTick(long millisUntilFinished) {
             }
@@ -186,10 +206,12 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
                 android.os.Process.killProcess(android.os.Process.myPid());
             }
         };
+        timeS=time;
         cTimer.start();
     }
 
     void cancelTimer() {
         cTimer.cancel();
+        timeS=time;
     }
 }

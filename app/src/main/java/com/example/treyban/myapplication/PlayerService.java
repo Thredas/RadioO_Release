@@ -19,6 +19,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -105,6 +106,7 @@ final public class PlayerService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_DEFAULT_CHANNEL_ID, "Player controls", NotificationManagerCompat.IMPORTANCE_DEFAULT);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);
 
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -169,7 +171,7 @@ final public class PlayerService extends Service {
 
                 try{
                     prepareToPlay(Uri.parse(stream));
-                }catch (Exception x){}
+                }catch (Exception ignored){}
                 /*new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -250,6 +252,7 @@ final public class PlayerService extends Service {
             refreshNotificationAndForegroundStatus(currentState);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onStop() {
             if (exoPlayer.getPlayWhenReady()) {
