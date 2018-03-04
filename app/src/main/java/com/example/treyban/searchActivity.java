@@ -294,7 +294,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
                 database0.close();
 
                 if(pass) {
-                    Toast.makeText(this, "Добавлено", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.Added, Toast.LENGTH_LONG).show();
                     DB_like db_like = new DB_like(this);
                     SQLiteDatabase database = db_like.getWritableDatabase();
                     ContentValues contentValues = new ContentValues();
@@ -305,7 +305,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
                     database.close();
                     ad(name_kanal, DATA_STREAM, link2);
                 }else {
-                    Toast.makeText(this, "Уже есть!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.Already_added, Toast.LENGTH_LONG).show();
                 }
 
             } else if (view.getId() == ima2.getId()) {
