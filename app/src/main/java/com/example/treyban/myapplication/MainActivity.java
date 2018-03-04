@@ -354,7 +354,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             mediaController.getTransportControls().prepare();
                             stat();
                         }else {
-//
 
                             iLeft=0;
 
