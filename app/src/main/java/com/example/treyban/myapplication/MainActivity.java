@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @SuppressLint("StaticFieldLeak")
     public static Context context;
-    public CardView Search;
+    public static CardView Search, cardview;
     public TextView textview10;
     @SuppressLint("StaticFieldLeak")
     public static ProgressBar progressBar;
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void Parse_data(String nomee, final int whence){
         pim_parse=false;
         nome=nomee;
-        progressBar.setVisibility(VISIBLE);
+//        progressBar.setVisibility(VISIBLE);
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -385,17 +385,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void stat(){
-        //progressBar.setVisibility(INVISIBLE);
+
+        cardview.post(new Runnable() {
+            @Override
+            public void run() {
+                int tx = (cardview.getLeft() + cardview.getRight()) / 3;
+                double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
+
+                float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
+
+                Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int)ty, 0, finalRadius);
+                anim.setDuration(650);
+                cardview.setVisibility(VISIBLE);
+                anim.start();
+            }
+        });
+
         textView_parse1.setText(name_trake);
         textView_parse2.setText(name_ispoln);
-        radio_now_play.setText(PlayerService.name==null ? "Нечего не играет" : PlayerService.name);
+        radio_now_play.setText(PlayerService.name==null ? "Ничего не играет" : PlayerService.name);
         Uri uri = Uri.parse(image);
         Picasso.with(context) //передаем контекст приложения
                 .load(uri)
                 .resize(750, 750)
                 .into(imgbtn);
         //progressBar.setScrollbarFadingEnabled(false);
-
     }
 
 
@@ -456,16 +470,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Search = findViewById(R.id.Search);
         scrollView = findViewById(R.id.scroll);
-        CardView cardView = findViewById(R.id.cardView);
+        cardview = findViewById(R.id.cardView);
 
         if(APP_THEME){
             Search.setCardBackgroundColor(getResources().getColor(R.color.dark_color));
             scrollView.setBackground(getResources().getDrawable(R.drawable.myrect));
-            cardView.setCardBackgroundColor(getResources().getColor(R.color.Background));
+            cardview.setCardBackgroundColor(getResources().getColor(R.color.Background));
         } else {
             Search.setCardBackgroundColor(getResources().getColor(R.color.white_dark));
             scrollView.setBackground(getResources().getDrawable(R.drawable.myrect_light));
-            cardView.setCardBackgroundColor(getResources().getColor(R.color.white));
+            cardview.setCardBackgroundColor(getResources().getColor(R.color.white));
         }
 
         (findViewById(R.id.track)).setSelected(true);
