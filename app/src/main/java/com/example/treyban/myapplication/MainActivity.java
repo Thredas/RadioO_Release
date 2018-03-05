@@ -86,15 +86,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static String resultJson = "";
     @SuppressLint("StaticFieldLeak")
     public static TextView textView_parse1, textView_parse2;
-    public static String name_trake=null, test_trake=null;
+    public static String name_trake=null;
     public static String name_ispoln=null;
-    public static String name_radio=null, test_radio=null;
+    public static String name_radio=null;
     public static String name_stream=null;
     public static String name_link=null;
     public static String name_nome=null;
     public static String name_timeLeft="0";
     public static String image="https://i.imgur.com/Og7pwiX.jpg", nome;
-   // public static boolean pim_parse=true;
+    public static boolean pim_parse=true;
     public static String theme = "";
     @SuppressLint("StaticFieldLeak")
     public static ImageButton imgbtn, play_button;
@@ -120,7 +120,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     PlayerService.PlayerServiceBinder playerServiceBinder;
     public static boolean searchAct=false;
     Bitmap bit=null;
-
+    public static String test_trake = null, test_radio = null;
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Update_fon();
+    }
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void Update_fon(){
 
@@ -265,9 +271,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("LongLogTag")
     public void Parse_data(String nomee, final int whence){
-
+        pim_parse=false;
         nome=nomee;
-        progressBar.setVisibility(VISIBLE);
+//        progressBar.setVisibility(VISIBLE);
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -501,7 +507,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView_parse1 = findViewById(R.id.track);
         textView_parse2 = findViewById(R.id.singer);
         progressBar = findViewById(R.id.progressBar2);
-        progressBar.setVisibility(INVISIBLE);
+        progressBar.setActivated(true);
         // progressBar.setProgress(1);
 
         context=getApplicationContext();
@@ -597,7 +603,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 while(true) {
-
+                    pim_parse=true;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Update_fon();
+                        }
+                    });
                     try {
                         Log.d("llllllllllllllllllllllllllllllllllllllllllllllll",name_timeLeft);
                         iLeft=0;
@@ -607,13 +619,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Thread.sleep(1000);
                         }
                     } catch (InterruptedException ignored) { }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.d("()()()()()()()()()()()()()()()()()()()()()()()()()",name_timeLeft);
-                            Update_fon();
-                        }
-                    });
 
                 }
             }
@@ -624,13 +629,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-   /* @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Update_fon();
-    }*/
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("MissingSuperCall")
     public void onResume() {
@@ -639,8 +637,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         (findViewById(R.id.singer)).setSelected(true);
         (findViewById(R.id.radio_now_play)).setSelected(true);
         Update_fon();
-        test_trake="";
-        test_radio="";
+        test_radio = "";
+        test_trake = "";
     }
     private Transition enterTransition() {
         ChangeBounds bounds = new ChangeBounds();
@@ -775,14 +773,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 button_animation();
             }
-
+            progressBar.setEnabled(false);
+            progressBar.setScrollbarFadingEnabled(false);
+            progressBar.setIndeterminate(false);
+            progressBar.setActivated(false);
+            progressBar.setClickable(false);
+            progressBar.setWillNotDraw(false);
+            progressBar.stopNestedScroll();
+            progressBar.setClickable(false);
+            progressBar.setProgress(0);
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            progressBar.stopNestedScroll();
+            progressBar.setVisibility(INVISIBLE);
         }
 
         for (int i = 0; i < pim; i++) {
             if (view == id[i]) {
 
                 closeFromCoordinates();
-               // mediaController.getTransportControls().stop();
+                mediaController.getTransportControls().stop();
+                pim_parse=true;
                 name_radio=name[i];
                 name_kanal=name[i];
                 name_stream=potok[i];
