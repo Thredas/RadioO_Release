@@ -776,14 +776,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 button_animation();
             }
 
-            //progressBar.setVisibility(INVISIBLE);
         }
 
         for (int i = 0; i < pim; i++) {
             if (view == id[i]) {
 
                 closeFromCoordinates();
-                //mediaController.getTransportControls().stop();
+               // mediaController.getTransportControls().stop();
                 name_radio=name[i];
                 name_kanal=name[i];
                 name_stream=potok[i];

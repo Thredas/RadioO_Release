@@ -161,14 +161,18 @@ final public class PlayerService extends Service {
         private Uri currentUri;
         int currentState = PlaybackStateCompat.STATE_STOPPED;
 
+
+
+        @SuppressLint("LongLogTag")
         public void onPlay() {
             stateN=false;
-
+            ExtractorMediaSource mediaSource = new ExtractorMediaSource(Uri.parse(stream), dataSourceFactory, extractorsFactory, null, null);
+            exoPlayer.prepare(mediaSource);
             if (!exoPlayer.getPlayWhenReady()) {
                 startService(new Intent(getApplicationContext(), PlayerService.class));
                 updateMetadataFromTrack(name,name_stream,name_author,bitmap);
                 MainActivity.name_radio=name;
-
+                Log.d("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$","");
                 try{
                     prepareToPlay(Uri.parse(stream));
                 }catch (Exception ignored){}
@@ -223,6 +227,7 @@ final public class PlayerService extends Service {
         @Override
         public void onPause() {
             stateN=true;
+
             if (exoPlayer.getPlayWhenReady()) {
                 exoPlayer.setPlayWhenReady(false);
                 unregisterReceiver(becomingNoisyReceiver);
