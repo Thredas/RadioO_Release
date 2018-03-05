@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void Parse_data(String nomee, final int whence){
 
         nome=nomee;
-//        progressBar.setVisibility(VISIBLE);
+        progressBar.setVisibility(VISIBLE);
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -501,7 +501,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView_parse1 = findViewById(R.id.track);
         textView_parse2 = findViewById(R.id.singer);
         progressBar = findViewById(R.id.progressBar2);
-        progressBar.setActivated(true);
+        progressBar.setVisibility(INVISIBLE);
         // progressBar.setProgress(1);
 
         context=getApplicationContext();
@@ -775,18 +775,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 button_animation();
             }
-           /* progressBar.setEnabled(false);
-            progressBar.setScrollbarFadingEnabled(false);
-            progressBar.setIndeterminate(false);
-            progressBar.setActivated(false);
-            progressBar.setClickable(false);
-            progressBar.setWillNotDraw(false);
-            progressBar.stopNestedScroll();
-            progressBar.setClickable(false);
-            progressBar.setProgress(0);
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
-            progressBar.stopNestedScroll();
-            progressBar.setVisibility(INVISIBLE);*/
+
+            //progressBar.setVisibility(INVISIBLE);
         }
 
         for (int i = 0; i < pim; i++) {
