@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static TextView textView_parse1, textView_parse2;
     public static String name_trake=null, test_trake=null;
     public static String name_ispoln=null;
-    public static String name_radio=null;
+    public static String name_radio=null, test_radio=null;
     public static String name_stream=null;
     public static String name_link=null;
     public static String name_nome=null;
@@ -380,8 +380,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void stat(){
-        if(!Objects.equals(name_trake,test_trake)) {
+        if(!Objects.equals(name_trake,test_trake) | !Objects.equals(name_radio,test_radio)) {
             test_trake=name_trake;
+            test_radio=name_radio;
             cardview.post(new Runnable() {
                 @Override
                 public void run() {
@@ -639,6 +640,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         (findViewById(R.id.radio_now_play)).setSelected(true);
         Update_fon();
         test_trake="";
+        test_radio="";
     }
     private Transition enterTransition() {
         ChangeBounds bounds = new ChangeBounds();

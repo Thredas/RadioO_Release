@@ -212,6 +212,6 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     void cancelTimer() {
         cTimer.cancel();
-        timeS=time;
+        timeS=0;
     }
 }
