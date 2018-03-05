@@ -48,7 +48,7 @@
 
     <style name="SearchTheme_light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@color/white_dark</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/dark_color</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/white</item>
         <item name="android:windowContentTransitions">true</item>
