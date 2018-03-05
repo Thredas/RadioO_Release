@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .into(imgbtn);
             //progressBar.setScrollbarFadingEnabled(false);
         }
-    }
+    }//
 
 
     public void start() {

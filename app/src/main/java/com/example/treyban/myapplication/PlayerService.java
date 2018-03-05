@@ -23,8 +23,10 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaButtonReceiver;
+import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
@@ -410,20 +412,30 @@ final public class PlayerService extends Service {
     }
 
     private Notification getNotification(int playbackState) {
-        NotificationCompat.Builder builder = MediaStyleHelper.from(this, mediaSession);
-        builder.addAction(new NotificationCompat.Action(R.color.transparent, getString(R.string.previous), MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS)));
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        // NotificationCompat.Builder builder = MediaStyleHelper.from(this, mediaSession);
+
+        MediaControllerCompat controller = mediaSession.getController();
+        MediaMetadataCompat mediaMetadata = controller.getMetadata();
+        MediaDescriptionCompat description = mediaMetadata.getDescription();
+
+
+        builder.setContentTitle(description.getTitle())
+                .setContentText(description.getSubtitle())
+                .setSubText(description.getDescription())
+                .setLargeIcon(description.getIconBitmap())
+                .setContentIntent(controller.getSessionActivity())
+                .setDeleteIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_STOP))
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setStyle(new android.support.v7.app.NotificationCompat.DecoratedMediaCustomViewStyle()
+                        .setShowActionsInCompactView(0));
+
 
         if (playbackState == PlaybackStateCompat.STATE_PLAYING)
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_pause_button, getString(R.string. pause), MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
         else
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_play_button, getString(R.string.play), MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
 
-        builder.addAction(new NotificationCompat.Action(R.color.transparent, getString(R.string.next), MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_SKIP_TO_NEXT)));
-        builder.setStyle(new android.support.v7.app.NotificationCompat.MediaStyle()
-                .setShowActionsInCompactView(1)
-                .setShowCancelButton(true)
-                .setCancelButtonIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_STOP))
-                .setMediaSession(mediaSession.getSessionToken())); // setMediaSession требуется для Android Wear
         builder.setSmallIcon(R.drawable.icon_small);
         builder.setColor(ContextCompat.getColor(this, R.color.dark_color)); // The whole background (in MediaStyle), not just icon background
         builder.setShowWhen(false);
