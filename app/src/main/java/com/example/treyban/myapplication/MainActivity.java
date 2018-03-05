@@ -392,26 +392,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             cardview.post(new Runnable() {
                 @Override
                 public void run() {
+
                     int tx = (cardview.getLeft() + cardview.getRight()) / 3;
                     double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
 
                     float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
 
-                    Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, 0, finalRadius);
-                    anim.setDuration(650);
-                    cardview.setVisibility(VISIBLE);
+                    Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, finalRadius,0 );
+                    anim.setDuration(500);
+                    anim.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            int tx = (cardview.getLeft() + cardview.getRight()) / 3;
+                            double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
+
+                            float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
+
+                            Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, 0, finalRadius);
+                            anim.setDuration(500);
+                            cardview.setVisibility(VISIBLE);
+                            anim.start();
+
+                            textView_parse1.setText(name_trake);
+                            textView_parse2.setText(name_ispoln);
+                            radio_now_play.setText(PlayerService.name == null ? "Ничего не играет" : PlayerService.name);
+                            Uri uri = Uri.parse(image);
+                            Picasso.with(context) //передаем контекст приложения
+                                    .load(uri)
+                                    .resize(750, 750)
+                                    .into(imgbtn);
+                        }
+                    });
                     anim.start();
                 }
             });
-
-            textView_parse1.setText(name_trake);
-            textView_parse2.setText(name_ispoln);
-            radio_now_play.setText(PlayerService.name == null ? "Ничего не играет" : PlayerService.name);
-            Uri uri = Uri.parse(image);
-            Picasso.with(context) //передаем контекст приложения
-                    .load(uri)
-                    .resize(750, 750)
-                    .into(imgbtn);
             //progressBar.setScrollbarFadingEnabled(false);
         }
     }//
@@ -463,6 +478,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         sPref = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean APP_THEME = sPref.getBoolean("APP_THEME",false);
+
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP)
+        {
+            if(APP_THEME){
+                setTheme(R.style.AppTheme_Dark);
+            } else {
+                setTheme(R.style.AppTheme_l);
+            }
+        }
 
         if(APP_THEME){
             setTheme(R.style.AppTheme_Dark);

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,15 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
 
         maPrefs = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean APP_THEME = maPrefs.getBoolean("APP_THEME",false);
+
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP)
+        {
+            if(APP_THEME){
+                setTheme(R.style.AppTheme_Dark);
+            } else {
+                setTheme(R.style.AppTheme_l);
+            }
+        }
 
         if(APP_THEME){
             setTheme(R.style.AppTheme_Dark);

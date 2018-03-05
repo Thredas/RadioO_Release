@@ -14,6 +14,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="56dp"
         app:cardBackgroundColor="@color/Background"
+        app:cardCornerRadius="6dp"
         app:cardElevation="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,9 +27,13 @@
             android:layout_height="272dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
+            android:bottomLeftRadius="6dp"
+            android:bottomRightRadius="6dp"
             android:contentDescription="@string/Content_description_cover"
             android:scaleType="centerCrop"
             android:src="@drawable/default_song_album"
+            android:topLeftRadius="6dp"
+            android:topRightRadius="6dp"
             android:visibility="visible" />
 
         <ImageButton
@@ -37,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/Content_description_play"
+            android:visibility="visible"
             app:srcCompat="@color/transparent" />
 
     </android.support.v7.widget.CardView>
@@ -87,9 +93,9 @@
         android:layout_marginTop="128dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/myrect"
+        android:background="@drawable/myrect_light"
         android:elevation="15dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintLeft_toLeftOf="parent"
