@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Parse_data(name_nome,1);
         }else{
             image="https://i.imgur.com/Og7pwiX.jpg";
-            name_trake="НАЗВАНИЕ ТРЕКА";
-            name_ispoln="Исполнитель";
-            name_radio="Ничего не играет";
+            name_trake="Музыка";
+            name_ispoln="Отсутствует";
+            //name_radio="Ничего не играет";
         }
         stat();
     }
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void Parse_data(String nomee, final int whence){
         pim_parse=false;
         nome=nomee;
-//        progressBar.setVisibility(VISIBLE);
+        progressBar.setVisibility(VISIBLE);
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -348,16 +348,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        progressBar.setVisibility(INVISIBLE);
+
 
                         if(whence==1){
-                            new PlayerService().setData_Media(name_kanal, name_trake, name_ispoln, name_stream,bit);
-                            mediaController.getTransportControls().prepare();
                             stat();
                         }else {
-
                             iLeft=0;
-
                             if (PlayerService.name != null) {
                                 mediaController.getTransportControls().pause();
                                 new PlayerService().setData_Media(name_kanal, name_trake, name_ispoln, name_stream, bit);
@@ -369,6 +365,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             if(whence!=3)stat();
                         }
+                        progressBar.setVisibility(INVISIBLE);
+
                     }
                 });
 
@@ -386,51 +384,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void stat(){
+        Log.d("","+++++++++++++++++++++++++++++++++++++++++");
+        Log.d("<<<<<"+name_trake," "+test_trake);
+        Log.d("<<<<<"+name_radio," "+test_radio);
         if(!Objects.equals(name_trake,test_trake) | !Objects.equals(name_radio,test_radio)) {
+            Log.d("","==============================================");
+            Log.d(">>>>>"+name_trake," "+test_trake);
+            Log.d(">>>>>"+name_radio," "+test_radio);
             test_trake=name_trake;
             test_radio=name_radio;
+
             textView_parse1.setText(name_trake);
-                            textView_parse2.setText(name_ispoln);
-                            radio_now_play.setText(PlayerService.name == null ? "Ничего не играет" : PlayerService.name);
-                            Uri uri = Uri.parse(image);
-                            Picasso.with(context) //передаем контекст приложения
-                                    .load(uri)
-                                    .resize(750, 750)
-                                    .into(imgbtn);
-//            cardview.post(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                    int tx = (cardview.getLeft() + cardview.getRight()) / 3;
-//                    double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
-//
-//                    float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
-//
-//                    Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, finalRadius,0 );
-//                    anim.setDuration(500);
-//                    anim.addListener(new AnimatorListenerAdapter() {
-//                        @Override
-//                        public void onAnimationEnd(Animator animation) {
-//                            super.onAnimationEnd(animation);
-//                            int tx = (cardview.getLeft() + cardview.getRight()) / 3;
-//                            double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
-//
-//                            float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
-//
-//                            Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, 0, finalRadius);
-//                            anim.setDuration(500);
-//                            cardview.setVisibility(VISIBLE);
-//                            anim.start();
-//
-//
-//                        }
-//                    });
-//                    anim.start();
-//                }
-//            });
-//            //progressBar.setScrollbarFadingEnabled(false);
-        }
+
+            cardview.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    int tx = (cardview.getLeft() + cardview.getRight()) / 3;
+                    double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
+
+                    float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
+
+                    Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, finalRadius,0 );
+                    anim.setDuration(500);
+                    anim.addListener(new AnimatorListenerAdapter() {
+                                         @Override
+                                         public void onAnimationEnd(Animator animation) {
+                                             super.onAnimationEnd(animation);
+                                             int tx = (cardview.getLeft() + cardview.getRight()) / 3;
+                                             double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
+
+                                             float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
+
+                                             Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, 0, finalRadius);
+                                             anim.setDuration(500);
+                                             cardview.setVisibility(VISIBLE);
+                                             anim.start();
+
+
+                                         }
+                                     });
+                    textView_parse1.setText(name_trake);
+
+                    textView_parse2.setText(name_ispoln);
+                    radio_now_play.setText(PlayerService.name == null ? "Ничего не играет" : PlayerService.name);
+                    Uri uri = Uri.parse(image);
+                    Picasso.with(context) //передаем контекст приложения
+                            .load(uri)
+                            .resize(750, 750)
+                            .into(imgbtn);
+
+
+////////////////////////
+                }
+            });
+            }
     }
+
 
 
     public void start() {
@@ -532,8 +542,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView_parse1 = findViewById(R.id.track);
         textView_parse2 = findViewById(R.id.singer);
         progressBar = findViewById(R.id.progressBar2);
-        progressBar.setActivated(true);
-        // progressBar.setProgress(1);
+
 
         context=getApplicationContext();
 
@@ -798,18 +807,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 button_animation();
             }
-            progressBar.setEnabled(false);
-            progressBar.setScrollbarFadingEnabled(false);
-            progressBar.setIndeterminate(false);
-            progressBar.setActivated(false);
-            progressBar.setClickable(false);
-            progressBar.setWillNotDraw(false);
-            progressBar.stopNestedScroll();
-            progressBar.setClickable(false);
-            progressBar.setProgress(0);
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
-            progressBar.stopNestedScroll();
-            progressBar.setVisibility(INVISIBLE);
+
         }
 
         for (int i = 0; i < pim; i++) {
@@ -822,6 +820,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 name_kanal=name[i];
                 name_stream=potok[i];
                 name_link=link[i];
+                Log.d("","+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_");
+                Log.d(">>>>>"+name_trake," "+test_trake);
+                Log.d(">>>>>"+name_radio," "+test_radio);
                 String masiv_link[]=link[i].split("/");
                 final String nome=masiv_link[masiv_link.length-1];
                 name_nome=nome;
