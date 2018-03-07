@@ -77,6 +77,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
     public static int i2=0;
     public static int i3=1;
     public SearchView search;
+    public TextView textSwitch;
     public static ArrayAdapter<String> adapter;
     @SuppressLint("StaticFieldLeak")
     public static RelativeLayout linearLayout;
@@ -138,6 +139,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
 
         linearLayout2.removeView(linearLayout);
         spinner1= findViewById(R.id.spinner);
+        textSwitch = findViewById(R.id.textSwitch);
         spinner1.setOnItemSelectedListener(this);
         spinner2= findViewById(R.id.spinner2);
         spinner2.setOnItemSelectedListener(this);
@@ -230,6 +232,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             @Override
             public void onClick(View v) {
                 aSwitch.setVisibility(View.INVISIBLE);
+                textSwitch.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -237,6 +240,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             @Override
             public boolean onClose() {
                 aSwitch.setVisibility(VISIBLE);
+                textSwitch.setVisibility(View.VISIBLE);
                 return false;
             }
         });

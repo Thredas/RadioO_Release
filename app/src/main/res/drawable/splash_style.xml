@@ -6,7 +6,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/icon_splash2"
+            android:src="@mipmap/icon_splash"
             android:scaleType="center"/>
     </item>
 

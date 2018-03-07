@@ -389,32 +389,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(!Objects.equals(name_trake,test_trake) | !Objects.equals(name_radio,test_radio)) {
             test_trake=name_trake;
             test_radio=name_radio;
-            cardview.post(new Runnable() {
-                @Override
-                public void run() {
-
-                    int tx = (cardview.getLeft() + cardview.getRight()) / 3;
-                    double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
-
-                    float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
-
-                    Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, finalRadius,0 );
-                    anim.setDuration(500);
-                    anim.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            int tx = (cardview.getLeft() + cardview.getRight()) / 3;
-                            double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
-
-                            float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
-
-                            Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, 0, finalRadius);
-                            anim.setDuration(500);
-                            cardview.setVisibility(VISIBLE);
-                            anim.start();
-
-                            textView_parse1.setText(name_trake);
+            textView_parse1.setText(name_trake);
                             textView_parse2.setText(name_ispoln);
                             radio_now_play.setText(PlayerService.name == null ? "Ничего не играет" : PlayerService.name);
                             Uri uri = Uri.parse(image);
@@ -422,14 +397,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     .load(uri)
                                     .resize(750, 750)
                                     .into(imgbtn);
-                        }
-                    });
-                    anim.start();
-                }
-            });
-            //progressBar.setScrollbarFadingEnabled(false);
+//            cardview.post(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                    int tx = (cardview.getLeft() + cardview.getRight()) / 3;
+//                    double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
+//
+//                    float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
+//
+//                    Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, finalRadius,0 );
+//                    anim.setDuration(500);
+//                    anim.addListener(new AnimatorListenerAdapter() {
+//                        @Override
+//                        public void onAnimationEnd(Animator animation) {
+//                            super.onAnimationEnd(animation);
+//                            int tx = (cardview.getLeft() + cardview.getRight()) / 3;
+//                            double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
+//
+//                            float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
+//
+//                            Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, 0, finalRadius);
+//                            anim.setDuration(500);
+//                            cardview.setVisibility(VISIBLE);
+//                            anim.start();
+//
+//
+//                        }
+//                    });
+//                    anim.start();
+//                }
+//            });
+//            //progressBar.setScrollbarFadingEnabled(false);
         }
-    }//
+    }
 
 
     public void start() {
