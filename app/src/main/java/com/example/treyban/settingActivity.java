@@ -48,7 +48,7 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
         maPrefs = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean APP_THEME = maPrefs.getBoolean("APP_THEME",false);
 
-        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP)
+        if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
         {
             if(APP_THEME){
                 setTheme(R.style.AppTheme_Dark);

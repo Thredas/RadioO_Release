@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:elevation="10dp"
             android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
+            app:layout_scrollFlags="scroll|snap">
 
             <LinearLayout
                 android:id="@+id/lin_l"

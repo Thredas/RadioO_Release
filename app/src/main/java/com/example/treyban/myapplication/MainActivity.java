@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @SuppressLint("StaticFieldLeak")
     public static Context context;
+    @SuppressLint("StaticFieldLeak")
     public static CardView Search, cardview;
     public TextView textview10;
     @SuppressLint("StaticFieldLeak")
@@ -134,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Parse_data(name_nome,1);
         }else{
             image="https://i.imgur.com/Og7pwiX.jpg";
-            name_trake="НАЗВАНИЕ ТРЕКА";
-            name_ispoln="Исполнитель";
+            name_trake="Музыка";
+            name_ispoln="Отсутствует";
             name_radio="Ничего не играет";
         }
         stat();
@@ -480,7 +481,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sPref = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean APP_THEME = sPref.getBoolean("APP_THEME",false);
 
-        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP)
+        if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
         {
             if(APP_THEME){
                 setTheme(R.style.AppTheme_Dark);
