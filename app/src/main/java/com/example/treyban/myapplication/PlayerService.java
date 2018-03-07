@@ -168,13 +168,22 @@ final public class PlayerService extends Service {
         @SuppressLint("LongLogTag")
         public void onPlay() {
             stateN=false;
-            ExtractorMediaSource mediaSource = new ExtractorMediaSource(Uri.parse(stream), dataSourceFactory, extractorsFactory, null, null);
-            exoPlayer.prepare(mediaSource);
+            try {
+                ExtractorMediaSource mediaSource = new ExtractorMediaSource(Uri.parse(stream), dataSourceFactory, extractorsFactory, null, null);
+                exoPlayer.prepare(mediaSource);
+            }catch (Exception x){
+
+            }
             if (!exoPlayer.getPlayWhenReady()) {
                 startService(new Intent(getApplicationContext(), PlayerService.class));
+                Log.d("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$","");
+                Log.d("name",String.valueOf(name));
+                Log.d("name_stream",String.valueOf(name_stream));
+                Log.d("name_author",String.valueOf(name_author));
+                Log.d("bitmap",String.valueOf(bitmap));
                 updateMetadataFromTrack(name,name_stream,name_author,bitmap);
                 MainActivity.name_radio=name;
-                Log.d("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$","");
+
                 try{
                     prepareToPlay(Uri.parse(stream));
                 }catch (Exception ignored){}
@@ -234,8 +243,7 @@ final public class PlayerService extends Service {
                 exoPlayer.setPlayWhenReady(false);
                 unregisterReceiver(becomingNoisyReceiver);
             }
-            MainActivity.name_radio=null;
-//            new searchActivity().state_now_music_symbol();
+
             if(searchAct)new searchActivity().state_music();
             mediaSession.setActive(false);
 
