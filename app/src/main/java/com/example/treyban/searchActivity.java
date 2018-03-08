@@ -11,6 +11,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -95,19 +98,14 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         maPrefs = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean APP_THEME = maPrefs.getBoolean("APP_THEME",false);
 
-        if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
-        {
-            if(APP_THEME){
-                setTheme(R.style.SearchTheme);
-            } else {
-                setTheme(R.style.SearchTheme_light_l);
-            }
-        }
-
         if(APP_THEME){
             setTheme(R.style.SearchTheme);
         } else {
-            setTheme(R.style.SearchTheme_light);
+            if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+                setTheme(R.style.SearchTheme_light_l);
+            } else {
+                setTheme(R.style.SearchTheme_light);
+            }
         }
 
         super.onCreate(savedInstanceState);
@@ -248,6 +246,12 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list_radioo2);
         listView.setAdapter(adapter);
 
+        windowAnimations();
+    }
+
+    private void windowAnimations() {
+        Fade fade = new Fade();
+        getWindow().setEnterTransition(fade);
     }
 
     public void list(String s[]){

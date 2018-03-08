@@ -30,7 +30,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.transition.ChangeBounds;
 import android.transition.Fade;
+import android.transition.Slide;
 import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.util.Pair;
 import android.view.GestureDetector;
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @SuppressLint("StaticFieldLeak")
     public static Context context;
+    @SuppressLint("StaticFieldLeak")
     public static CardView Search, cardview;
     public TextView textview10;
     @SuppressLint("StaticFieldLeak")
@@ -351,6 +354,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                         if(whence==1){
+                            new PlayerService().setData_Media(name_kanal, name_trake, name_ispoln, name_stream,bit);
+                            mediaController.getTransportControls().prepare();
                             stat();
                         }else {
                             iLeft=0;
@@ -490,19 +495,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sPref = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean APP_THEME = sPref.getBoolean("APP_THEME",false);
 
-        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP)
-        {
-            if(APP_THEME){
-                setTheme(R.style.AppTheme_Dark);
-            } else {
-                setTheme(R.style.AppTheme_l);
-            }
-        }
-
         if(APP_THEME){
             setTheme(R.style.AppTheme_Dark);
         } else {
-            setTheme(R.style.AppTheme);
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+                setTheme(R.style.AppTheme_l);
+            } else {
+                setTheme(R.style.AppTheme);
+            }
         }
 
         setContentView(R.layout.activity_main);
@@ -555,34 +555,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public boolean onDoubleTap(MotionEvent e) {
-                        Search = findViewById(R.id.Search);
                         Intent intent = new Intent("com.example.treyban.searchActivity");
-                        View sharedView = Search;
-                        String transitionName = getString(R.string.Search);
                         (findViewById(R.id.track)).setSelected(false);
                         (findViewById(R.id.singer)).setSelected(false);
                         (findViewById(R.id.radio_now_play)).setSelected(false);
-                        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, sharedView, transitionName);
-                        startActivity(intent, transitionActivityOptions.toBundle());
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
                         Search.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                         return false;
                     }
 
                     @Override
                     public void onLongPress(MotionEvent e) {
-                        Search = findViewById(R.id.Search);
-                        textview10 = findViewById(R.id.radio_now_play);
-                        Search.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                         Intent intent = new Intent("com.example.treyban.settingActivity");
-                        View sharedView = Search;
-                        View sharedView2 = textview10;
-                        String transitionName = getString(R.string.Search);
-                        String transitionName2 = getString(R.string.Text);
                         (findViewById(R.id.track)).setSelected(false);
                         (findViewById(R.id.singer)).setSelected(false);
                         (findViewById(R.id.radio_now_play)).setSelected(false);
-                        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, Pair.create(sharedView, transitionName), Pair.create(sharedView2, transitionName2));
-                        startActivity(intent, transitionActivityOptions.toBundle());
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
+                        Search.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     }
 
                     @Override
@@ -658,9 +647,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         thread2.start();
-        getWindow().setSharedElementEnterTransition(enterTransition());
-        getWindow().setSharedElementReturnTransition(returnTransition());
 
+        windowAnimations();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -674,16 +662,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         test_radio = "";
         test_trake = "";
     }
-    private Transition enterTransition() {
-        ChangeBounds bounds = new ChangeBounds();
-        bounds.setDuration(1500);
-        return bounds;
-    }
 
-    private Transition returnTransition() {
-        Fade f = new Fade();
-        f.setDuration(1500);
-        return f;
+    private void windowAnimations() {
+        Slide slide = new Slide();
+        getWindow().setExitTransition(slide);
     }
 
     public void revealFromCoordinates() {

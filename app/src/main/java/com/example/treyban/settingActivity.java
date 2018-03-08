@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -48,19 +51,15 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
         maPrefs = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean APP_THEME = maPrefs.getBoolean("APP_THEME",false);
 
-        if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
-        {
-            if(APP_THEME){
-                setTheme(R.style.AppTheme_Dark);
-            } else {
-                setTheme(R.style.AppTheme_l);
-            }
-        }
-
         if(APP_THEME){
             setTheme(R.style.AppTheme_Dark);
         } else {
-            setTheme(R.style.AppTheme);
+            if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+                setTheme(R.style.AppTheme_l);
+            } else {
+                setTheme(R.style.AppTheme);
+            }
+
         }
         setContentView(R.layout.activity_setting);
 
@@ -127,6 +126,12 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
+        windowAnimations();
+    }
+
+    private void windowAnimations() {
+        Fade fade = new Fade();
+        getWindow().setEnterTransition(fade);
     }
 
     public void addListenerOnButton(){
