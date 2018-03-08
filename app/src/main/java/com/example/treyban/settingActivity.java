@@ -4,14 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.transition.Fade;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -25,6 +22,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import static com.example.treyban.myapplication.MainActivity.APP_PREFERENCES;
+import static java.lang.String.valueOf;
 
 public class settingActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener{
 
@@ -34,7 +32,6 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
     public static SeekBar seekBar;
     @SuppressLint("StaticFieldLeak")
     public static TextView timeText;
-    public Button reset;
     public Switch Sswitch;
     public static float time = 0,timeS = 0;
     public static CountDownTimer cTimer = null;
@@ -54,7 +51,7 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
         if(APP_THEME){
             setTheme(R.style.AppTheme_Dark);
         } else {
-            if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+            if (android.os.Build.VERSION.SDK_INT <= 22) {
                 setTheme(R.style.AppTheme_l);
             } else {
                 setTheme(R.style.AppTheme);
@@ -94,9 +91,11 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+
                     SharedPreferences.Editor editor = maPrefs.edit();
                     editor.putBoolean("APP_THEME", true);
                     editor.apply();
+
                     Sswitch.setText(R.string.theme_dark);
                     Intent i = getBaseContext().getPackageManager()
                             .getLaunchIntentForPackage( getBaseContext().getPackageName() );
@@ -104,9 +103,11 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 } else {
+
                     SharedPreferences.Editor editor = maPrefs.edit();
                     editor.putBoolean("APP_THEME", false);
                     editor.apply();
+
                     Sswitch.setText(R.string.theme_light);
                     Intent i = getBaseContext().getPackageManager()
                             .getLaunchIntentForPackage( getBaseContext().getPackageName() );
@@ -130,8 +131,8 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
     }
 
     private void windowAnimations() {
-        Fade fade = new Fade();
-        getWindow().setEnterTransition(fade);
+        Fade slide = new Fade();
+        getWindow().setEnterTransition(slide);
     }
 
     public void addListenerOnButton(){
@@ -139,7 +140,6 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
         seekBar = findViewById(R.id.seekBar);
         timeText = findViewById(R.id.timeText);
         cancel = findViewById(R.id.cancel);
-        reset = findViewById(R.id.reset);
 
         setTime.setOnClickListener(
                 new View.OnClickListener(){
@@ -165,18 +165,6 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
                 }
         );
 
-        reset.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        SharedPreferences.Editor editor = maPrefs.edit();
-                        editor.putBoolean("APP_THEME", false);
-                        editor.putBoolean("Tutorial", false);
-                        editor.apply();
-                    }
-                }
-        );
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -185,7 +173,7 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
         timeText = findViewById(R.id.timeText);
         time = progress;
         time = time / 2;
-        timeText.setText(String.valueOf(time) + " " + getString(R.string.Hours2));
+        timeText.setText(valueOf(time) + " " + getString(R.string.Hours2));
     }
 
     @Override
@@ -206,7 +194,7 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
     void startTimer() {
         final long x;
         if(time==0){
-            Toast.makeText(settingActivity.this,"Ошибка", Toast.LENGTH_SHORT).show();
+            Toast.makeText(settingActivity.this, R.string.Error, Toast.LENGTH_SHORT).show();
             return;
         }
         cancel.setVisibility(View.VISIBLE);
@@ -215,8 +203,7 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
 
         x = (long)  (time * 3600000);
         cTimer = new CountDownTimer(x, 1000) {
-            public void onTick(long millisUntilFinished) {
-            }
+            public void onTick(long millisUntilFinished) {  }
             public void onFinish() {
                 android.os.Process.killProcess(android.os.Process.myPid());
             }

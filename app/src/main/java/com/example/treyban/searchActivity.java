@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Fade;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,16 +25,13 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.treyban.myapplication.DB_like;
 import com.example.treyban.myapplication.DatabaseHelper;
 import com.example.treyban.myapplication.MainActivity;
 import com.example.treyban.myapplication.PlayerService;
 import com.example.treyban.myapplication.R;
-
 import java.io.IOException;
 import java.util.Objects;
-
 import static android.view.View.VISIBLE;
 import static com.example.treyban.myapplication.MainActivity.APP_PREFERENCES;
 import static com.example.treyban.myapplication.MainActivity.ad;
@@ -63,15 +58,12 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             {68,61,3,102,104,105,75,63,60,103,66,4,59,64,58},
             {102,68,103,59,195,196},
             {32,18,122,121,50,120,124,30,29,123}};
-
     ListView listView;
     @SuppressLint("StaticFieldLeak")
     public static TextView textView;
     public static String link2;
     public static String DATA_STREAM = "http://ic7.101.ru:8000/a219?userid=0&setst=ve7npodn8gkcncmdjk54ls7ht4&city=347";
-    //Переменная для работы с БД
     public static String name_kanal;
-
     public Switch aSwitch;
     public static String [] list_radioo;
     public static String [] list_potoks;
@@ -87,7 +79,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
     @SuppressLint("StaticFieldLeak")
     public static LinearLayout linearLayout2;
     @SuppressLint("StaticFieldLeak")
-    public static ImageButton ima, ima1,  ima2;
+    public static ImageButton ima, ima1, ima2;
     public SharedPreferences maPrefs;
     public android.support.v7.widget.Toolbar toolbar;
 
@@ -101,7 +93,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         if(APP_THEME){
             setTheme(R.style.SearchTheme);
         } else {
-            if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+            if (android.os.Build.VERSION.SDK_INT <= 22) {
                 setTheme(R.style.SearchTheme_light_l);
             } else {
                 setTheme(R.style.SearchTheme_light);
@@ -250,8 +242,8 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
     }
 
     private void windowAnimations() {
-        Fade fade = new Fade();
-        getWindow().setEnterTransition(fade);
+        Fade slide = new Fade();
+        getWindow().setEnterTransition(slide);
     }
 
     public void list(String s[]){
@@ -354,7 +346,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         state_music();
 
     }
-    // Вызывается перед выходом из "полноценного" состояния.
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if(i3!=1|i2!=1)aSwitch.setChecked(false);

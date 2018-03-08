@@ -50,6 +50,7 @@
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="282dp"
             android:layout_height="282dp"
+            android:layout_gravity="center"
             android:contentDescription="@string/Content_description_play"
             android:visibility="visible"
             app:srcCompat="@color/transparent" />

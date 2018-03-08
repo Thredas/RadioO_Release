@@ -16,21 +16,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.transition.Slide;
+import android.transition.Explode;
 import android.util.Log;
-import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
@@ -77,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Context context;
     @SuppressLint("StaticFieldLeak")
     public static CardView Search, cardview;
-    public TextView textview10;
     @SuppressLint("StaticFieldLeak")
     public static ProgressBar progressBar;
     public static HttpURLConnection urlConnection = null;
@@ -111,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Thread thread,thread2;
     public SharedPreferences sPref;
     public static final String APP_PREFERENCES = "Settings";
-
     public Button button;
     public static String pars_uri_1="http://101.ru/api/channel/getTrackOnAir/",
             pars_uri_2="/channel/?dataFormat=json";
@@ -120,13 +115,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static boolean searchAct=false;
     Bitmap bit=null;
     public static String test_trake = null, test_radio = null;
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     protected void onRestart() {
         super.onRestart();
         Update_fon();
     }
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public void Update_fon(){
 
         if(PlayerService.name!=null) {
@@ -135,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             image="https://i.imgur.com/Og7pwiX.jpg";
             name_trake="Музыка";
             name_ispoln="Отсутствует";
-            //name_radio="Ничего не играет";
         }
         stat();
     }
@@ -267,7 +261,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return bm;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("LongLogTag")
     public void Parse_data(String nomee, final int whence){
         pim_parse=false;
@@ -322,7 +315,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     JSONObject jsonObjTime = (JSONObject) jsonObj2.get("stat");
-                    //JSONObject jsonObjTime2 = (JSONObject) jsonObjTime.get("lastTime");
                     name_timeLeft=( jsonObjTime.get("lastTime")).toString();
 
                 }catch (Exception x){
@@ -332,8 +324,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     name_timeLeft="0";
                 }
 
-
-                //  pim_parse=false;
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -346,7 +336,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
 
                         if(whence==1){
                             new PlayerService().setData_Media(name_kanal, name_trake, name_ispoln, name_stream, bit);
@@ -369,20 +358,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 });
-
-
-
-
             }
         });
 
         thread.start();
-
-
-
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public void stat(){
         Log.d("","+++++++++++++++++++++++++++++++++++++++++");
         Log.d("<<<<<"+name_trake," "+test_trake);
@@ -395,50 +377,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             test_radio=name_radio;
 
             textView_parse1.setText(name_trake);
-
-            cardview.post(new Runnable() {
-                @Override
-                public void run() {
-
-                    int tx = (cardview.getLeft() + cardview.getRight()) / 3;
-                    double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
-
-                    float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
-
-                    Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, finalRadius,0 );
-                    anim.setDuration(500);
-                    anim.addListener(new AnimatorListenerAdapter() {
-                                         @Override
-                                         public void onAnimationEnd(Animator animation) {
-                                             super.onAnimationEnd(animation);
-                                             int tx = (cardview.getLeft() + cardview.getRight()) / 3;
-                                             double ty = (cardview.getTop() + cardview.getBottom()) / 2.5;
-
-                                             float finalRadius = (float) Math.hypot(cardview.getWidth(), cardview.getHeight());
-
-                                             Animator anim = ViewAnimationUtils.createCircularReveal(cardview, tx, (int) ty, 0, finalRadius);
-                                             anim.setDuration(500);
-                                             cardview.setVisibility(VISIBLE);
-                                             anim.start();
-
-
-                                         }
-                                     });
-                    textView_parse1.setText(name_trake);
-
-                    textView_parse2.setText(name_ispoln);
-                    radio_now_play.setText(PlayerService.name == null ? "Ничего не играет" : PlayerService.name);
-                    Uri uri = Uri.parse(image);
-                    Picasso.with(context) //передаем контекст приложения
-                            .load(uri)
-                            .resize(750, 750)
-                            .into(imgbtn);
-
-
-////////////////////////
-                }
-            });
-            }
+            textView_parse1.setText(name_trake);
+            textView_parse2.setText(name_ispoln);
+            radio_now_play.setText(PlayerService.name == null ? "Ничего не играет" : PlayerService.name);
+            Uri uri = Uri.parse(image);
+            Picasso.with(context) //передаем контекст приложения
+                    .load(uri)
+                    .resize(750, 750)
+                    .into(imgbtn);
+        }
     }
 
 
@@ -482,7 +429,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -493,7 +439,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(APP_THEME){
             setTheme(R.style.AppTheme_Dark);
         } else {
-            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            if (android.os.Build.VERSION.SDK_INT <= 22) {
                 setTheme(R.style.AppTheme_l);
             } else {
                 setTheme(R.style.AppTheme);
@@ -567,6 +513,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         (findViewById(R.id.radio_now_play)).setSelected(false);
                         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
                         Search.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
                     }
 
                     @Override
@@ -646,7 +593,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         windowAnimations();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("MissingSuperCall")
     public void onResume() {
         super.onResume();
@@ -659,7 +605,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void windowAnimations() {
-        Slide slide = new Slide();
+        Explode slide = new Explode();
         getWindow().setExitTransition(slide);
     }
 
@@ -766,7 +712,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         play_button.startAnimation(animation);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.play_button){
