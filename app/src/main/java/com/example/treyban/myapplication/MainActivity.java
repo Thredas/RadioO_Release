@@ -351,6 +351,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                         if(whence==1){
+                            new PlayerService().setData_Media(name_kanal, name_trake, name_ispoln, name_stream, bit);
+                            mediaController.getTransportControls().prepare();
                             stat();
                         }else {
                             iLeft=0;
