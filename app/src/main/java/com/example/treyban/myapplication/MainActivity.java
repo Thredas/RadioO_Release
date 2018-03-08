@@ -273,7 +273,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void Parse_data(String nomee, final int whence){
         pim_parse=false;
         nome=nomee;
-        progressBar.setVisibility(VISIBLE);
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -814,7 +813,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int i = 0; i < pim; i++) {
             if (view == id[i]) {
-
+                progressBar.setVisibility(VISIBLE);
                 closeFromCoordinates();
                 mediaController.getTransportControls().stop();
                 pim_parse=true;
