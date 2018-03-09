@@ -9,15 +9,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -27,12 +27,11 @@ import android.widget.Toast;
 
 import com.example.treyban.myapplication.DB_like;
 import com.example.treyban.myapplication.DatabaseHelper;
-import com.example.treyban.myapplication.MainActivity;
+import com.example.treyban.myapplication.MyAdapter;
 import com.example.treyban.myapplication.PlayerService;
 import com.example.treyban.myapplication.R;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import static android.view.View.VISIBLE;
 import static com.example.treyban.myapplication.MainActivity.APP_PREFERENCES;
@@ -41,7 +40,6 @@ import static com.example.treyban.myapplication.MainActivity.mediaController;
 import static com.example.treyban.myapplication.MainActivity.name_link;
 import static com.example.treyban.myapplication.MainActivity.name_nome;
 import static com.example.treyban.myapplication.MainActivity.name_radio;
-import static com.example.treyban.myapplication.MainActivity.name_stream;
 import static com.example.treyban.myapplication.MainActivity.searchAct;
 import static com.example.treyban.myapplication.PlayerService.name;
 import static java.lang.System.arraycopy;
@@ -61,7 +59,10 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             {102,68,103,59,195,196},
             {32,18,122,121,50,120,124,30,29,123}};
 
-    ListView listView;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     @SuppressLint("StaticFieldLeak")
     public static TextView textView;
     public static String link2;
@@ -95,7 +96,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         maPrefs = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean APP_THEME = maPrefs.getBoolean("APP_THEME",false);
 
-        if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP)
         {
             if(APP_THEME){
                 setTheme(R.style.SearchTheme);
@@ -147,14 +148,21 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         spinner1.setAdapter(adapter1);
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,zanaytia);
         spinner2.setAdapter(adapter2);
-        listView= findViewById(R.id.list_kanal);
+        mRecyclerView= findViewById(R.id.list_kanal);
+        mRecyclerView.setHasFixedSize(true);
+
         aSwitch= findViewById(R.id.switch1);
         search=findViewById(R.id.searchView);
         searchAct=true;
         if(name_radio!=null)
             link2=name_link;
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -179,7 +187,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
                 state_music();
                 new MainActivity().Parse_data(nome,3);
             }
-        });
+        });*/
 
         DatabaseHelper mDBHelper = new DatabaseHelper(this);
 
@@ -223,7 +231,13 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
                 spinner2.setSelection(0);
                 aSwitch.setChecked(false);
                 onClick(aSwitch);
-                adapter.getFilter().filter(s);
+
+
+               // mAdapter.getFilter().filter(s);
+
+              //  mAdapter = new MyAdapter(list_radioo);
+              //  mRecyclerView.setAdapter(mAdapter);
+              //  mRecyclerView.
                 return false;
             }
         });
@@ -245,14 +259,14 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             }
         });
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list_radioo2);
-        listView.setAdapter(adapter);
+        mAdapter = new MyAdapter(list_radioo);
+        mRecyclerView.setAdapter(mAdapter);
 
     }
 
     public void list(String s[]){
-        ArrayAdapter<String> adap = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, s);
-        listView.setAdapter(adap);
+        mAdapter = new MyAdapter(s);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     public void state_music(){
@@ -343,7 +357,8 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
                     list(mood);
                 } else {
 
-                    listView.setAdapter(adapter);
+                    mAdapter = new MyAdapter(list_radioo);
+                    mRecyclerView.setAdapter(mAdapter);
                 }
             }
         }

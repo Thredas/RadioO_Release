@@ -250,7 +250,9 @@ final public class PlayerService extends Service {
             mediaSession.setPlaybackState(stateBuilder.setState(PlaybackStateCompat.STATE_STOPPED, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, 1).build());
             currentState = PlaybackStateCompat.STATE_PAUSED;
 
-            refreshNotificationAndForegroundStatus(currentState);
+            try {
+                refreshNotificationAndForegroundStatus(currentState);
+            }catch (Exception x){}
             //  onDestroy();
         }
 
