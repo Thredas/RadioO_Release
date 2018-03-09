@@ -18,10 +18,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public LinearLayout linearLayout;
         public TextView mTextView;
-        public ViewHolder(TextView v) {
+        public ViewHolder(LinearLayout v) {
             super(v);
-             mTextView= v;
+            linearLayout = v;
+            mTextView = v.findViewById(R.id.recyclerText);
 
         }
     }
@@ -41,7 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 .inflate(R.layout.recyclerview_row, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
-        ViewHolder vh = new ViewHolder((TextView) v);
+        ViewHolder vh = new ViewHolder((LinearLayout)v);
         return vh;
     }
 
