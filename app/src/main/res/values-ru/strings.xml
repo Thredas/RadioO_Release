@@ -6,6 +6,8 @@
 
     <string name="Track">Название трека</string>
     <string name="Performer">Исполнитель</string>
+    <string name="Music">Отсутствует</string>
+    <string name="No_music">Музыка</string>
     <string name="NowPlay">Сейчас ничего не играет</string>
     <string name="RadioStation">Радиостанция</string>
     <string name="Favorite">Избранное</string>
@@ -97,5 +99,6 @@
     <string name="theme_dark">Темная</string>
     <string name="theme_light">Светлая</string>
     <string name="Reset_settings">Сбросить настройки</string>
+    <string name="Error">Ошибка</string>
 
 </resources>

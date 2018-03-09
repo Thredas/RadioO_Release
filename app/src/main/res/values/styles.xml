@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -10,7 +10,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:colorBackground">@color/white</item>
         <item name="android:colorAccent">@color/colorAccent</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
     <style name="AppTheme_l" parent="Theme.AppCompat.Light.NoActionBar">
@@ -32,7 +32,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:colorBackground">@color/Background</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 
     <style name="SearchTheme" parent="Theme.AppCompat.NoActionBar">
@@ -43,7 +43,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:colorBackground">@color/Background</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 
     <style name="SearchTheme_light" parent="Theme.AppCompat.Light.NoActionBar">
@@ -55,7 +55,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:colorBackground">@color/white</item>
         <item name="android:colorAccent">@color/colorAccent</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
     <style name="SearchTheme_light_l" parent="Theme.AppCompat.Light.NoActionBar">

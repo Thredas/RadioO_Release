@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,14 +25,13 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.treyban.myapplication.DB_like;
 import com.example.treyban.myapplication.DatabaseHelper;
 import com.example.treyban.myapplication.MyAdapter;
 import com.example.treyban.myapplication.PlayerService;
 import com.example.treyban.myapplication.R;
-
 import java.io.IOException;
+import java.util.Objects;
 
 import static android.view.View.VISIBLE;
 import static com.example.treyban.myapplication.MainActivity.APP_PREFERENCES;
@@ -96,19 +96,14 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         maPrefs = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean APP_THEME = maPrefs.getBoolean("APP_THEME",false);
 
-        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP)
-        {
-            if(APP_THEME){
-                setTheme(R.style.SearchTheme);
-            } else {
-                setTheme(R.style.SearchTheme_light_l);
-            }
-        }
-
         if(APP_THEME){
             setTheme(R.style.SearchTheme);
         } else {
-            setTheme(R.style.SearchTheme_light);
+            if (android.os.Build.VERSION.SDK_INT <= 22) {
+                setTheme(R.style.SearchTheme_light_l);
+            } else {
+                setTheme(R.style.SearchTheme_light);
+            }
         }
 
         super.onCreate(savedInstanceState);
@@ -262,6 +257,12 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         mAdapter = new MyAdapter(list_radioo);
         mRecyclerView.setAdapter(mAdapter);
 
+        windowAnimations();
+    }
+
+    private void windowAnimations() {
+        Fade slide = new Fade();
+        getWindow().setEnterTransition(slide);
     }
 
     public void list(String s[]){
@@ -365,7 +366,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         state_music();
 
     }
-    // Вызывается перед выходом из "полноценного" состояния.
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if(i3!=1|i2!=1)aSwitch.setChecked(false);

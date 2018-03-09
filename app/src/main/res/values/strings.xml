@@ -5,6 +5,8 @@
     <string name="Text">Text</string>
 
     <string name="Track">Track name</string>
+    <string name="Music">Music</string>
+    <string name="No_music">No</string>
     <string name="Performer">Performer</string>
     <string name="NowPlay">Nothing plays now</string>
     <string name="RadioStation">Radio station</string>
@@ -101,6 +103,7 @@
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
     <string name="Reset_settings">Reset settings</string>
+    <string name="Error">Error</string>
 
     <string name="previous">Previous</string>
     <string name="next">Next</string>
