@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,13 +24,16 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.treyban.myapplication.DB_like;
 import com.example.treyban.myapplication.DatabaseHelper;
+import com.example.treyban.myapplication.MainActivity;
 import com.example.treyban.myapplication.MyAdapter;
 import com.example.treyban.myapplication.PlayerService;
 import com.example.treyban.myapplication.R;
+import com.example.treyban.myapplication.RecyclerClickListener;
+
 import java.io.IOException;
-import java.util.Objects;
 
 import static android.view.View.VISIBLE;
 import static com.example.treyban.myapplication.MainActivity.APP_PREFERENCES;
@@ -41,6 +43,7 @@ import static com.example.treyban.myapplication.MainActivity.name_link;
 import static com.example.treyban.myapplication.MainActivity.name_nome;
 import static com.example.treyban.myapplication.MainActivity.name_radio;
 import static com.example.treyban.myapplication.MainActivity.searchAct;
+import static com.example.treyban.myapplication.MainActivity.name_stream;
 import static com.example.treyban.myapplication.PlayerService.name;
 import static java.lang.System.arraycopy;
 
@@ -155,6 +158,30 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(this) {
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+
+            @Override
+            public void onItemClick(RecyclerView recyclerView, View itemView,
+                                    int position) {
+                name_kanal= (String) ((TextView)itemView).getText();
+                DATA_STREAM=list_potoks[position];
+                link2=list_link[position];
+                MainActivity.mediaController.getTransportControls().stop();
+                String masiv_link[] = link2.split("/");
+                String nome=masiv_link[masiv_link.length-1];
+                name_nome=nome;
+                name_stream=DATA_STREAM;
+                name_nome=nome;
+                name_radio= name;
+                textView.setText(name_kanal);
+                state_music();
+                new MainActivity().Parse_data(nome,3);
+            }
+        });
         // specify an adapter (see also next example)
 
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
