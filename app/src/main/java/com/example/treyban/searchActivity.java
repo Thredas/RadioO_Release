@@ -355,7 +355,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
                     DB_like db_like = new DB_like(this);
                     SQLiteDatabase database = db_like.getWritableDatabase();
                     ContentValues contentValues = new ContentValues();
-                    contentValues.put("name", name_kanal);
+                    contentValues.put("name", name_kanal.replace("    ", ""));
                     contentValues.put("potok", DATA_STREAM);
                     contentValues.put("link", link2);
                     database.insert(DB_like.TABLE_CONTACTS, null, contentValues);
