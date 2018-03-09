@@ -307,6 +307,8 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
 
     public void state_music(){
         //textView= findViewById(R.id.textView);
+        Log.d("","+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
         textView.setText(name);
         linearLayout2.removeView(linearLayout);
         if(name!=null) {
@@ -314,7 +316,6 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             linearLayout2.addView(linearLayout);
         }
         if(name_radio==null){
-            if(ima2==null) Log.d("","+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
             ima2.setImageResource(R.drawable.play_button);
         }else {

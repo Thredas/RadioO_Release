@@ -174,41 +174,16 @@ final public class PlayerService extends Service {
             }catch (Exception x){
 
             }
+            MainActivity.name_radio=name;
+            if(searchAct) new searchActivity().state_music();
             if (!exoPlayer.getPlayWhenReady()) {
                 startService(new Intent(getApplicationContext(), PlayerService.class));
-                Log.d("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$","");
-                Log.d("name",String.valueOf(name));
-                Log.d("name_stream",String.valueOf(name_stream));
-                Log.d("name_author",String.valueOf(name_author));
-                Log.d("bitmap",String.valueOf(bitmap));
                 updateMetadataFromTrack(name,name_stream,name_author,bitmap);
-                MainActivity.name_radio=name;
 
                 try{
                     prepareToPlay(Uri.parse(stream));
                 }catch (Exception ignored){}
-                /*new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {}
-                       if(stream!=null)
-                         if(stream.contains("http://ic"))
-                            if ( mediaSession.isActive()) {
-                                Log.d("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "1111111111111111");
 
-                            } else if (! mediaSession.isActive()){
-                                Log.d("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "2222222222222222");
-                                StringBuilder myName = new StringBuilder(stream);
-                                myName.setCharAt(9, '3');
-                                stream=myName.toString();
-                                prepareToPlay(Uri.parse(stream));
-                            }
-                    }
-                }).start();*/
-
-                if(searchAct) new searchActivity().state_music();
                 if (!audioFocusRequested) {
                     audioFocusRequested = true;
 
@@ -243,7 +218,7 @@ final public class PlayerService extends Service {
                 exoPlayer.setPlayWhenReady(false);
                 unregisterReceiver(becomingNoisyReceiver);
             }
-
+            MainActivity.name_radio=null;
             if(searchAct)new searchActivity().state_music();
             mediaSession.setActive(false);
 
