@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:elevation="10dp"
             android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|snap">
+            app:layout_scrollFlags="scroll">
 
             <LinearLayout
                 android:id="@+id/lin_l"
@@ -187,10 +187,10 @@
         android:id="@+id/list_kanal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:fitsSystemWindows="true"
         android:nestedScrollingEnabled="true"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -65,7 +65,6 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @SuppressLint("StaticFieldLeak")
     public static TextView textView;
@@ -83,7 +82,6 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
     public static int i3=1;
     public SearchView search;
     public TextView textSwitch;
-    public static ArrayAdapter<String> adapter;
     @SuppressLint("StaticFieldLeak")
     public static RelativeLayout linearLayout;
     @SuppressLint("StaticFieldLeak")
@@ -156,7 +154,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         if(name_radio!=null)
             link2=name_link;
 
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(this) {
@@ -168,7 +166,8 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             @Override
             public void onItemClick(RecyclerView recyclerView, View itemView,
                                     int position) {
-                name_kanal= (String) ((TextView)itemView).getText();
+
+                name_kanal= (String)((TextView)itemView).getText();
                 for(int i=0;i<198;i++){
                     if(Objects.equals(name_kanal, list_radioo[i])){
                         DATA_STREAM=list_potoks[i];
@@ -235,7 +234,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
         list_link = new String[198];
         int nom=0;
         while (!cursor.isAfterLast()) {
-            list_radioo[nom]=cursor.getString(1);
+            list_radioo[nom]= "    " +cursor.getString(1);
             list_potoks[nom]=cursor.getString(2);
             list_link[nom]=cursor.getString(3);
             nom++;
@@ -304,16 +303,13 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
     }
 
     public void state_music(){
-        //textView= findViewById(R.id.textView);
-        textView.setText(name);
+
         linearLayout2.removeView(linearLayout);
         if(name!=null) {
-            Log.d("","+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             linearLayout2.addView(linearLayout);
+            textView.setText(name.replace(" ", ""));
         }
         if(name_radio==null){
-            if(ima2==null) Log.d("","+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
             ima2.setImageResource(R.drawable.play_button);
         }else {
             ima2.setImageResource(R.drawable.pause_button);
