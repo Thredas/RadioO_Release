@@ -34,6 +34,7 @@ import com.example.treyban.myapplication.R;
 import com.example.treyban.myapplication.RecyclerClickListener;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static android.view.View.VISIBLE;
 import static com.example.treyban.myapplication.MainActivity.APP_PREFERENCES;
@@ -42,8 +43,8 @@ import static com.example.treyban.myapplication.MainActivity.mediaController;
 import static com.example.treyban.myapplication.MainActivity.name_link;
 import static com.example.treyban.myapplication.MainActivity.name_nome;
 import static com.example.treyban.myapplication.MainActivity.name_radio;
-import static com.example.treyban.myapplication.MainActivity.searchAct;
 import static com.example.treyban.myapplication.MainActivity.name_stream;
+import static com.example.treyban.myapplication.MainActivity.searchAct;
 import static com.example.treyban.myapplication.PlayerService.name;
 import static java.lang.System.arraycopy;
 
@@ -168,8 +169,13 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
             public void onItemClick(RecyclerView recyclerView, View itemView,
                                     int position) {
                 name_kanal= (String) ((TextView)itemView).getText();
-                DATA_STREAM=list_potoks[position];
-                link2=list_link[position];
+                for(int i=0;i<198;i++){
+                    if(Objects.equals(name_kanal, list_radioo[i])){
+                        DATA_STREAM=list_potoks[i];
+                        link2=list_link[i];
+                        break;
+                    }
+                }
                 MainActivity.mediaController.getTransportControls().stop();
                 String masiv_link[] = link2.split("/");
                 String nome=masiv_link[masiv_link.length-1];
