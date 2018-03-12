@@ -171,7 +171,7 @@ final public class PlayerService extends Service {
             try {
                 ExtractorMediaSource mediaSource = new ExtractorMediaSource(Uri.parse(stream), dataSourceFactory, extractorsFactory, null, null);
                 exoPlayer.prepare(mediaSource);
-            }catch (Exception x){
+            }catch (Exception ignored){
 
             }
             MainActivity.name_radio=name;
@@ -227,8 +227,7 @@ final public class PlayerService extends Service {
 
             try {
                 refreshNotificationAndForegroundStatus(currentState);
-            }catch (Exception x){}
-            //  onDestroy();
+            }catch (Exception ignored){}
         }
 
         @Override

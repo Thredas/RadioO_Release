@@ -190,34 +190,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
                 new MainActivity().Parse_data(nome,3);
             }
         });
-        // specify an adapter (see also next example)
 
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
-
-                name_kanal= (String) ((TextView)itemClicked).getText();
-                for(int i=0;i<198;i++){
-                    if(Objects.equals(name_kanal, list_radioo[i])){
-                        DATA_STREAM=list_potoks[i];
-                        link2=list_link[i];
-                        break;
-                    }
-                }
-                MainActivity.mediaController.getTransportControls().stop();
-                String masiv_link[] = link2.split("/");
-                String nome=masiv_link[masiv_link.length-1];
-                name_nome=nome;
-                name_stream=DATA_STREAM;
-                name_nome=nome;
-                name_radio= name;
-                textView.setText(name_kanal);
-                state_music();
-                new MainActivity().Parse_data(nome,3);
-            }
-        });*/
 
         DatabaseHelper mDBHelper = new DatabaseHelper(this);
 
@@ -255,6 +228,7 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
                 return false;
             }
 
+            @SuppressLint("LongLogTag")
             @Override
             public boolean onQueryTextChange(String s) {
                 spinner1.setSelection(0);
@@ -262,12 +236,26 @@ public class searchActivity extends AppCompatActivity implements  View.OnClickLi
                 aSwitch.setChecked(false);
                 onClick(aSwitch);
 
+                int col=0;
+                for (int i=0; i<198; i++){
+                    if((list_radioo[i].toLowerCase().replace(" ","")).contains(s.toLowerCase().replace(" ",""))){
+                        Log.d("^^^^^^^^^^^^^^^^^^^^^^^^",list_radioo[i]);
+                        col++;
+                    }
+                }
+                String filter [] = new String [col];
+                col=0;
+                for (int i = 0; i < 198; i++) {
+                    if ((list_radioo[i].toLowerCase().replace(" ", "")).contains(s.toLowerCase().replace(" ", ""))) {
+                        Log.d(String.valueOf(filter.length)+"  "+String.valueOf(col)+"  &&&&&&&&&&&&&&&&&&&",list_radioo[i]);
+                        filter[col] = list_radioo[i];
+                        col++;
+                    }
+                }
 
-               // mAdapter.getFilter().filter(s);
+                mAdapter = new MyAdapter(filter);
+                mRecyclerView.setAdapter(mAdapter);
 
-              //  mAdapter = new MyAdapter(list_radioo);
-              //  mRecyclerView.setAdapter(mAdapter);
-              //  mRecyclerView.
                 return false;
             }
         });
