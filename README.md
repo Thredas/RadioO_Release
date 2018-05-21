@@ -1,1 +1,3 @@
-![Image alt](https://github.com/TreyBan/RadioO_Release/raw/master/Images/screen.tiff)
+<p align="center">
+  <img src="Images/screen.tiff" width="350"/>
+</p>
