@@ -26,7 +26,7 @@
     <string name="Dialog">Вы точно хотите удалить эту радиостанцию?</string>
     <string name="No">Нет</string>
     <string name="Yes">Да</string>
-
+    <string name="Deleted">Удалено</string>
 
     <string-array name="Genre">
         <item>Жанр</item>

@@ -421,7 +421,7 @@ final public class PlayerService extends Service {
             builder.addAction(new NotificationCompat.Action(R.drawable.ic_play_button, getString(R.string.play), MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
 
         builder.setSmallIcon(R.drawable.icon_small);
-        builder.setColor(ContextCompat.getColor(this, R.color.dark_color)); // The whole background (in MediaStyle), not just icon background
+         // The whole background (in MediaStyle), not just icon background
         builder.setShowWhen(false);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setOnlyAlertOnce(true);

@@ -115,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static boolean searchAct=false;
     Bitmap bit=null;
     public static String test_trake = null, test_radio = null;
+    public ImageButton btn1;
+    public ImageButton btn2;
+    public ImageButton btn3;
 
     @Override
     protected void onRestart() {
@@ -447,17 +450,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         setContentView(R.layout.activity_main);
-
-        Search = findViewById(R.id.Search);
         scrollView = findViewById(R.id.scroll);
         cardview = findViewById(R.id.cardView);
 
         if(APP_THEME){
-            Search.setCardBackgroundColor(getResources().getColor(R.color.dark_color));
             scrollView.setBackground(getResources().getDrawable(R.drawable.myrect));
             cardview.setCardBackgroundColor(getResources().getColor(R.color.Background));
         } else {
-            Search.setCardBackgroundColor(getResources().getColor(R.color.white_dark));
             scrollView.setBackground(getResources().getDrawable(R.drawable.myrect_light));
             cardview.setCardBackgroundColor(getResources().getColor(R.color.white));
         }
@@ -493,29 +492,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         final GestureDetector gesture = new GestureDetector(MainActivity.this,
                 new GestureDetector.SimpleOnGestureListener() {
-
-                    @Override
-                    public boolean onDoubleTap(MotionEvent e) {
-                        Intent intent = new Intent("com.example.treyban.searchActivity");
-                        (findViewById(R.id.track)).setSelected(false);
-                        (findViewById(R.id.singer)).setSelected(false);
-                        (findViewById(R.id.radio_now_play)).setSelected(false);
-                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
-                        Search.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                        return false;
-                    }
-
-                    @Override
-                    public void onLongPress(MotionEvent e) {
-                        Intent intent = new Intent("com.example.treyban.settingActivity");
-                        (findViewById(R.id.track)).setSelected(false);
-                        (findViewById(R.id.singer)).setSelected(false);
-                        (findViewById(R.id.radio_now_play)).setSelected(false);
-                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
-                        Search.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-
-                    }
-
                     @Override
                     public boolean onSingleTapConfirmed (MotionEvent e){
                         cx = (int) e.getRawX();
@@ -556,13 +532,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         //
 
-        Search.setOnTouchListener(new View.OnTouchListener() {
+        btn2 = findViewById(R.id.btn2);
+
+        btn2.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 gesture.onTouchEvent(event);
                 return true;
             }
         });
+
         thread2 = new Thread(new Runnable() {
             @SuppressLint("LongLogTag")
             @Override
@@ -591,6 +570,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         thread2.start();
 
         windowAnimations();
+
+        addListenerOnButton();
+    }
+
+    public void addListenerOnButton(){
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
+
+        btn1.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Intent intent = new Intent("com.example.treyban.searchActivity");
+                        (findViewById(R.id.track)).setSelected(false);
+                        (findViewById(R.id.singer)).setSelected(false);
+                        (findViewById(R.id.radio_now_play)).setSelected(false);
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
+                        btn1.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    }
+                }
+        );
+
+        btn3.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Intent intent = new Intent("com.example.treyban.settingActivity");
+                        (findViewById(R.id.track)).setSelected(false);
+                        (findViewById(R.id.singer)).setSelected(false);
+                        (findViewById(R.id.radio_now_play)).setSelected(false);
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
+                        btn3.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    }
+                }
+        );
+
     }
 
     @SuppressLint("MissingSuperCall")
@@ -612,7 +628,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void revealFromCoordinates() {
         float finalRadius = (float) Math.hypot(scrollView.getWidth(), scrollView.getHeight());
 
-        Search.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        btn2.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         Animator anim = ViewAnimationUtils.createCircularReveal(scrollView, cx, cy, 0, finalRadius);
         anim.setDuration(350);
         scrollView.setVisibility(VISIBLE);

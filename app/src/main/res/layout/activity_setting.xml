@@ -33,13 +33,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:transitionName="@string/Search"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,14 +44,14 @@
                 android:id="@+id/sleep_timer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="6dp"
-                android:layout_marginEnd="12dp"
-                android:layout_gravity="center"
                 android:elevation="6dp"
-                app:cardBackgroundColor="@color/white_dark"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardElevation="4dp">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -68,9 +61,9 @@
                         android:id="@+id/seekBar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="56dp"
-                        android:layout_marginEnd="5dp"
                         android:max="10"
                         android:visibility="visible"
                         app:layout_constraintEnd_toStartOf="@+id/timeText"
@@ -92,8 +85,8 @@
                         android:id="@+id/timeText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="56dp"
                         android:layout_marginEnd="24dp"
+                        android:layout_marginTop="56dp"
                         android:text="@string/Hours"
                         android:textAlignment="center"
                         app:layout_constraintRight_toRightOf="parent"
@@ -104,9 +97,9 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="16dp"
                         android:text="@string/Set"
                         android:textAlignment="viewStart"
                         android:textAppearance="@android:style/TextAppearance.Material.Small"
@@ -121,9 +114,9 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="16dp"
                         android:text="@string/Cancel"
                         android:textAlignment="viewStart"
                         android:textAppearance="@android:style/TextAppearance.Material.Small"
@@ -141,14 +134,14 @@
                 android:id="@+id/theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="12dp"
-                android:layout_gravity="center"
                 android:elevation="6dp"
-                app:cardBackgroundColor="@color/white_dark"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardElevation="4dp">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -169,9 +162,9 @@
                         android:id="@+id/switch2"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_marginStart="28dp"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="28dp"
                         android:switchTextAppearance="@android:style/TextAppearance.Material.Small"
                         android:text="@string/theme_light"
                         android:textAlignment="viewStart"
@@ -187,8 +180,6 @@
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
