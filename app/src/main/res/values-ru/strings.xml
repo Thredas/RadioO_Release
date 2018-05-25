@@ -8,7 +8,7 @@
     <string name="Performer">Исполнитель</string>
     <string name="Music">Отсутствует</string>
     <string name="No_music">Музыка</string>
-    <string name="NowPlay">Сейчас ничего не играет</string>
+    <string name="NowPlay">Радио не выбрано</string>
     <string name="RadioStation">Радиостанция</string>
     <string name="Favorite">Избранное</string>
     <string name="Tutorial">Это - Action Card</string>
@@ -95,9 +95,9 @@
     <string name="Cancel">Отменить</string>
     <string name="Timer_stopped">Таймер остановлен</string>
     <string name="Music_off">Музыка отключится через </string>
-    <string name="Theme">Тема</string>
-    <string name="theme_dark">Темная</string>
-    <string name="theme_light">Светлая</string>
+    <string name="Theme">Персонализация</string>
+    <string name="theme_dark">Темная тема</string>
+    <string name="theme_light">Светлая тема</string>
     <string name="Reset_settings">Сбросить настройки</string>
     <string name="Error">Ошибка</string>
 

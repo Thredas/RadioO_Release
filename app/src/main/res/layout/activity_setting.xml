@@ -31,7 +31,15 @@
         </android.support.v7.widget.Toolbar>
 
 
+
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +51,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/sleep_timer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
@@ -138,6 +146,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="6dp"
                 android:elevation="6dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="6dp"
@@ -162,33 +171,38 @@
                         android:id="@+id/switch2"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_marginBottom="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginStart="28dp"
+                        android:layout_marginTop="56dp"
                         android:switchTextAppearance="@android:style/TextAppearance.Material.Small"
-                        android:text="@string/theme_light"
+                        android:text="@string/theme_dark"
                         android:textAlignment="viewStart"
                         android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textColor="?android:attr/textColorTertiary"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
+
         </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
+        android:transitionName="@string/Text"
+        android:visibility="visible"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-8421124895754019/3431167066"
-        android:transitionName="@string/Text">
+        ads:adUnitId="ca-app-pub-8421124895754019/3431167066">
+
     </com.google.android.gms.ads.AdView>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -10,7 +10,7 @@
         android:id="@+id/radio_now_play"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="6dp"
         android:ellipsize="marquee"
         android:gravity="center"
         android:marqueeRepeatLimit="marquee_forever"
@@ -192,6 +192,7 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="24dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:elevation="3dp"
         android:src="@drawable/ic_search_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn2" />

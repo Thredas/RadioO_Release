@@ -8,7 +8,7 @@
     <string name="Music">Music</string>
     <string name="No_music">No</string>
     <string name="Performer">Performer</string>
-    <string name="NowPlay">Nothing plays now</string>
+    <string name="NowPlay">Radio not selected</string>
     <string name="RadioStation">Radio station</string>
     <string name="Favorite">Favorites</string>
     <string name="Tutorial">This is an Action Card</string>
@@ -99,9 +99,9 @@
     <string name="play">Play</string>
     <string name="pause">Pause</string>
     <string name="stop">Stop</string>
-    <string name="Theme">Theme</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_light">Light</string>
+    <string name="Theme">Personalization</string>
+    <string name="theme_dark">Dark theme</string>
+    <string name="theme_light">Light theme</string>
     <string name="Reset_settings">Reset settings</string>
     <string name="Error">Error</string>
 

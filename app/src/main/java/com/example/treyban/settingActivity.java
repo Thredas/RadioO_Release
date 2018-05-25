@@ -96,7 +96,6 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
                     editor.putBoolean("APP_THEME", true);
                     editor.apply();
 
-                    Sswitch.setText(R.string.theme_dark);
                     Intent i = getBaseContext().getPackageManager()
                             .getLaunchIntentForPackage( getBaseContext().getPackageName() );
                     assert i != null;
@@ -108,7 +107,6 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
                     editor.putBoolean("APP_THEME", false);
                     editor.apply();
 
-                    Sswitch.setText(R.string.theme_light);
                     Intent i = getBaseContext().getPackageManager()
                             .getLaunchIntentForPackage( getBaseContext().getPackageName() );
                     assert i != null;

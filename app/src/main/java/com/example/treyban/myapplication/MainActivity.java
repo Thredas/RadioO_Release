@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -382,7 +383,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             textView_parse1.setText(name_trake);
             textView_parse1.setText(name_trake);
             textView_parse2.setText(name_ispoln);
-            radio_now_play.setText(PlayerService.name == null ? "Ничего не играет" : PlayerService.name);
+            radio_now_play.setText(PlayerService.name == null ? "Радио не выбрано" : PlayerService.name);
             Uri uri = Uri.parse(image);
             Picasso.with(context) //передаем контекст приложения
                     .load(uri)
