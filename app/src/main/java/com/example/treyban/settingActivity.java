@@ -74,12 +74,10 @@ public class settingActivity extends AppCompatActivity implements SeekBar.OnSeek
         }
         if(APP_THEME){
             Sswitch.setChecked(true);
-            Sswitch.setText(R.string.theme_dark);
             sleep_timer.setCardBackgroundColor(getResources().getColor(R.color.dark_color));
             theme.setCardBackgroundColor(getResources().getColor(R.color.dark_color));
         } else {
             Sswitch.setChecked(false);
-            Sswitch.setText(R.string.theme_light);
             sleep_timer.setCardBackgroundColor(getResources().getColor(R.color.white_dark));
             theme.setCardBackgroundColor(getResources().getColor(R.color.white_dark));
         }
